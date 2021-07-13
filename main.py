@@ -1,5 +1,7 @@
 import pygame
 import random
+import sys
+from pygame.locals import QUIT
 
 pygame.init()
 screen_info = pygame.display.Info()
@@ -37,6 +39,9 @@ print(' ')
 def main():
   while True:
     clock.tick(60)
+    for event in pygame.event.get():
+      if event.type == QUIT:
+        sys.exit()
     move_fish()
     screen.fill((40, 180, 255))
     screen.blit(fish_image, fish_rect)
