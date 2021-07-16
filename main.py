@@ -8,32 +8,53 @@ screen_info = pygame.display.Info()
 width = screen_info.current_w
 height = screen_info.current_h
 size = (width, height)
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 clock = pygame.time.Clock()
-fish_image = pygame.image.load('fish.png')
-fish_image = pygame.transform.smoothscale(fish_image, (80, 80))
-fish_rect = fish_image.get_rect()
-fish_rect.center = (width // 2, height // 2)
+dvd_image = pygame.image.load('dvdlogored.png')
+dvd_image = pygame.transform.smoothscale(dvd_image, (80, 80))
+dvd_rect = dvd_image.get_rect()
+dvd_rect.center = (width // 2, height // 2)
 speed = pygame.math.Vector2(0, 10)
 rotation = random.randint(0, 360)
 speed.rotate_ip(rotation)
-fish_image = pygame.transform.rotate(fish_image, 180 - rotation)
+# dvd_image = pygame.transform.rotate(dvd_image, 180 - rotation)
 
-def move_fish():
-  global fish_image
+def change_pic():
+  global dvd_image
+  ranpic = random.randint (0, 6)
+  if ranpic == 1:
+    dvd_image = pygame.image.load('dvdlogored.png')
+  elif ranpic == 2:
+    dvd_image = pygame.image.load('dvdlogoorange.png')
+  elif ranpic == 3:
+    dvd_image = pygame.image.load('dvdlogoyellow.png')
+  elif ranpic == 4:
+    dvd_image = pygame.image.load('dvdlogogreen.png')
+  elif ranpic == 5:
+    dvd_image = pygame.image.load('dvdlogoblue.png')
+  elif ranpic == 6:
+    dvd_image = pygame.image.load('dvdlogopurple.png')
+  dvd_image = pygame.transform.smoothscale(dvd_image, (80, 80))
+  dvd_rect = dvd_image.get_rect()
+  dvd_rect.center = (width // 2, height // 2)
+
+def move_dvd():
+  global dvd_image
   info_now = pygame.display.Info()
-  fish_rect.move_ip(speed)
-  if fish_rect.left < 0 or fish_rect.right > info_now.current_w:
+  dvd_rect.move_ip(speed)
+  if dvd_rect.left < 0 or dvd_rect.right > info_now.current_w:
     speed[0] = speed[0] * -1 
-    fish_image = pygame.transform.flip(fish_image, True, False)
-    fish_rect.move_ip(speed[0], 0)
-  if fish_rect.top < 0 or fish_rect.bottom > info_now.current_h:
+    change_pic()
+    # dvd_image = pygame.transform.flip(dvd_image, True, False)
+    dvd_rect.move_ip(speed[0], 0)
+  if dvd_rect.top < 0 or dvd_rect.bottom > info_now.current_h:
     speed[1] = speed[1] * -1
-    fish_image = pygame.transform.flip(fish_image, False, True)
-    fish_rect.move_ip(0, speed[1])
+    change_pic()
+    # dvd_image = pygame.transform.flip(dvd_image, False, True)
+    dvd_rect.move_ip(0, speed[1])
 
 print('')
-print('F I S H')
+print('D V D')
 print(' ')
 
 def main():
@@ -42,9 +63,9 @@ def main():
     for event in pygame.event.get():
       if event.type == QUIT:
         sys.exit()
-    move_fish()
-    screen.fill((40, 180, 255))
-    screen.blit(fish_image, fish_rect)
+    move_dvd()
+    screen.fill((0, 0, 0))
+    screen.blit(dvd_image, dvd_rect)
     pygame.display.update()
 
 if __name__ == '__main__':
